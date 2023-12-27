@@ -30,7 +30,7 @@ const FashionDatas = [
         cloting: "",
         pants : "Quần gió",
         sex: "male",//Female
-        size: "M",
+        size: "XL",
         color: "Xanh",
         retailPrice : "1.100.000",
         material : "Plyester 10%, Elostane 90%"
@@ -42,7 +42,7 @@ const FashionDatas = [
         cloting: "",
         pants : "Quần nỉ",
         sex: "male",//Female
-        size: "M",
+        size: "XXL",
         color: "Đen",
         retailPrice : "1.700.000",
         material : "Plyester 10%, Elostane 90%"
