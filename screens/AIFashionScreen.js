@@ -4,7 +4,8 @@ import {
     View,
     TextInput,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Image
 } from 'react-native';
 import AppStyle from '../theme';
 import FashionDatas from '../config/FashionData';
@@ -34,67 +35,159 @@ export default function AIFashionScreen() {
     const [skinColor, setSkinColor] = useState(null);
     const [filteredFashion, setFilteredFashion] = useState([]);
 
-    const handleButtonPress = (index) => {
-        setSkinColor(index);
-    };
-
     const colorData = () => {
-        let colorGroup;
         if (skinColor !== null) {
+            let colorGroup;
+
             if (skinColor >= 1 && skinColor <= 10) {
                 colorGroup = 'A';
             } else if (skinColor >= 11 && skinColor <= 20) {
                 colorGroup = 'B';
-            } else {
+            } else if (skinColor >= 21 && skinColor <= 30) {
                 colorGroup = 'C';
+            } else {
+                console.log('Chưa chọn màu da');
+                return null;
+            }
+
+            console.log('Màu đã chọn:', skinColor);
+            console.log('Color thuộc:', colorGroup);
+
+            // Tìm kiếm thông tin màu sắc trong ColorAnalysisComponent dựa trên colorGroup
+            const colorInfo = ColorAnalysisComponent.find(item => item.paletteName === colorGroup);
+
+            if (colorInfo) {
+                console.log(`Bảng màu: ${colorInfo.paletteName}`);
+                console.log('Màu da:', colorInfo.useColors);
+                console.log('Không sử dụng màu sắc:', colorInfo.doNotUseColors);
+                return colorInfo; // Trả về thông tin màu sắc
+            } else {
+                console.log('Không tìm thấy thông tin bảng màu cho nhóm màu.');
+                return null;
             }
         } else {
             console.log("Chưa chọn màu da.");
+            return null;
         }
-    }
+    };
 
-    const data = [`tuổi:${age}`, `chiều cao: ${bodyHeight}`, `cân nặng: ${bodyWeight}`, `vòng 1: ${bust}`, ` ${waist}`, `${hip}`, `${skinColor}`]
+    const handleButtonPress = (index) => {
+        setSkinColor(index);
+        console.log('Selected Skin Color:', index); // Thêm lệnh log ở đây để hiển thị giá trị skinColor
+    };
+    // input
+    const data = [`tuổi:${age}`, `chiều cao: ${bodyHeight}`, `cân nặng: ${bodyWeight}`, `vòng 1: ${bust}`, ` ${waist}`, `${hip}`, `${skinColor}`, `${fabric}`]
 
     const handleButtonSearch = () => {
         console.log(data);
         colorData();  // Call the function by adding parentheses
         filterFashionData();  // Gọi hàm lọc thời trang
+        const currentSeason = getSeason();
+        console.log(`Current season: ${currentSeason}`);
     };
+    /// lấy mùa 
+    const getSeason = () => {
+        const currentDate = new Date();
+        const month = currentDate.getMonth() + 1;
 
+        if (month >= 3 && month <= 5) {
+            return 'Mùa xuân';
+        } else if (month >= 6 && month <= 8) {
+            return 'Hè';
+        } else if (month >= 9 && month <= 11) {
+            return 'Thu';
+        } else {
+            return 'Đông';
+        }
+    }
+    
 
+    // Hàm kiểm tra xem trang phục có thuộc mùa không
+    const isFashionInSeason = (item, currentSeason) => {
+        const winterKeywords = [
+            "áo khoác", "áo dự nhiệt", "áo len", "áo hoodie", "quần áo mùa đông",
+            "găng tay", "mũ len", "áo sơ mi dài tay", "áo khoác chống nước", "giày ấm", "nỉ"
+        ];
+    
+        const summerKeywords = [
+            "áo sơ mi ngắn tay", "quần short", "váy hè", "đồ bơi", "mũ nắng", "áo lót"
+        ];
+    
+        const springKeywords = [
+            "áo khoác bomber", "áo sơ mi dài tay", "quần jogger", "áo len dài tay", "áo khoác mùa xuân"
+        ];
+    
+        const fallKeywords = [
+            "áo khoác nhẹ", "áo len mỏng", "quần jeans", "áo khoác gió", "giày thể thao"
+        ];
+    
+        let seasonKeywords;
+    
+        switch (currentSeason) {
+            case 'Đông':
+                seasonKeywords = winterKeywords;
+                break;
+            case 'Hè':
+                seasonKeywords = summerKeywords;
+                break;
+            case 'Xuân':
+                seasonKeywords = springKeywords;
+                break;
+            case 'Thu':
+                seasonKeywords = fallKeywords;
+                break;
+            default:
+                seasonKeywords = [];
+                break;
+        }
+    
+        // Kiểm tra xem productName có chứa từ khóa của mùa đó hay không
+        return seasonKeywords.some(keyword => item.productName.toLowerCase().includes(keyword.toLowerCase()));
+    };
+    
+    
     const filterFashionData = () => {
+        const currentSeason = getSeason();
+    
         // Lấy thông tin chiều cao và cân nặng từ người dùng
         const customerSize = {
             height: parseFloat(bodyHeight),
-            weight: parseFloat(bodyWeight)
+            weight: parseFloat(bodyWeight),
         };
-
+    
         // Lọc danh sách thời trang dựa trên chiều cao và cân nặng
-        const filteredFashionData = FashionDatas.filter(item => {
+        const allFashionData = FashionDatas.filter(item => {
             // Tìm thông tin kích thước phù hợp từ SizeAnalysisComponent
             const sizeInfo = SizeAnalysisComponent.find(size => {
                 const { min: minHeight, max: maxHeight } = size.heightRange;
                 const { min: minWeight, max: maxWeight } = size.weightRange;
-
+    
                 const isHeightInRange = customerSize.height >= minHeight && customerSize.height <= maxHeight + 2;
                 const isWeightInRange = (
                     (customerSize.weight >= minWeight - 3 && customerSize.weight <= maxWeight + 3) ||
                     (customerSize.weight >= maxWeight + 3 && customerSize.weight <= minWeight - 3)
                 );
-
+    
                 return isHeightInRange && isWeightInRange;
             });
-
-
-
+    
             // Nếu tìm thấy thông tin kích thước, kiểm tra xem size của thời trang có phù hợp không
             return sizeInfo && sizeInfo.size === item.size;
         });
-
-        // Cập nhật state filteredFashion với kết quả lọc
-        setFilteredFashion(filteredFashionData);
+    
+        // Lọc ra các sản phẩm thuộc mùa hiện tại
+        const currentSeasonFashionData = allFashionData.filter(item => isFashionInSeason(item, currentSeason));
+    
+        // Lọc ra các sản phẩm không thuộc mùa hiện tại
+        const otherFashionData = allFashionData.filter(item => !isFashionInSeason(item, currentSeason));
+    
+        // Sắp xếp mảng để đưa trang phục thuộc mùa hiện tại lên trên
+        const sortedFashionData = currentSeasonFashionData.concat(otherFashionData);
+    
+        // Cập nhật state filteredFashion với kết quả lọc và sắp xếp
+        setFilteredFashion(sortedFashionData);
     };
-
+    
 
     const renderFashionData = () => {
         if (filteredFashion.length === 0) {
@@ -106,11 +199,50 @@ export default function AIFashionScreen() {
         }
 
         return (
-            <View style={{ height: 1000 }}>
+            <View style={{}}>
                 {filteredFashion.map(item => (
-                    <View>
-                        <Text key={item.id}>{item.productName}</Text>
-                        <Text >{item.size}</Text>
+                    <View
+                        style={{
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: 22,
+                                fontWeight: "600",
+                                color: "#660033"
+                            }}
+                        >
+                            Trang phục phù hợp với bạn:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                fontWeight: "600",
+                                color: "#F4A460"
+                            }}
+                            key={item.id}>Tên sản phẩm: {item.productName}{item.id}</Text>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                fontWeight: "500",
+                                color: "#2F4F4F"
+                            }}
+                        >Giá: {item.retailPrice} đ</Text>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                fontWeight: "600"
+                            }}
+                        >Cỡ: {item.size}</Text>
+                        <Image
+                            source={item.image}
+                            style={{
+                                height: 200,
+                                width: "50%"
+                            }}
+                        />
                     </View>
 
                 ))}
@@ -282,11 +414,8 @@ export default function AIFashionScreen() {
                 </View>
 
                 <View style={{
-                    height: 1000
+                    backgroundColor: "#F5F5F5"
                 }}>
-                    <Text>
-                        render
-                    </Text>
                     {renderFashionData()}
                 </View>
 

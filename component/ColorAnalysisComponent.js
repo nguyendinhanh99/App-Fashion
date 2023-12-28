@@ -1,6 +1,6 @@
 const ColorAnalysisComponent = [
     {
-        paletteName: "color1",
+        paletteName: "A",
         useColors: [
             "Màu Trắng",
             "Màu Pastel",
@@ -16,7 +16,7 @@ const ColorAnalysisComponent = [
         doNotUseColors: ["Hồng", "be", "tím"]
     },
     {
-        paletteName: "color2",
+        paletteName: "B",
         useColors: [
             "Màu Burgundy",
             "Màu Camel",
@@ -30,7 +30,7 @@ const ColorAnalysisComponent = [
         doNotUseColors: ["hạt dẻ", "vàng", "be", "kaki", "xám", "nâu", "trắng"]
     },
     {
-        paletteName: "color3",
+        paletteName: "C",
         useColors: [
             "Màu Kem",
             "Màu Đỏ Đậm",
