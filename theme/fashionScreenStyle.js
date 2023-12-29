@@ -6,7 +6,8 @@ const Height = Dimensions.get('window').height;
 
 const FashionScreenStyle = StyleSheet.create({
     container: {
-        flex : 1
+        flex : 1,
+        backgroundColor: "#E0FFFF",
     },
     inner: {
         padding: 20,

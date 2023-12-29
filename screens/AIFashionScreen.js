@@ -260,7 +260,9 @@ export default function AIFashionScreen() {
     const renderFashionData = () => {
         if (filteredFashion.length === 0) {
             return (
-                <View style={{ height: 1000 }}>
+                <View style={{ height: 1000,
+                    backgroundColor: "#E0FFFF",
+                 }}>
                     <Text>Không có Fashion phù hợp</Text>
                 </View>
             );
