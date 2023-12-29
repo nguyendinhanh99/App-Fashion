@@ -6,6 +6,7 @@ import HomeScreen from '../screens/homeSceen';
 import NoteScreen from '../screens/noteScreen';
 import SizeShoesScreen from '../screens/SizeShoesScreen';
 import AIFashionScreen from '../screens/AIFashionScreen';
+import MyShopScreen from '../screens/myShopScreen';
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -15,6 +16,8 @@ function MyTabs() {
       <Tab.Screen options={{ headerShown: false }}  name="Fashion AI" component={AIFashionScreen} />
       <Tab.Screen options={{ headerShown: false }}  name="Ghi Chú" component={NoteScreen} />
       <Tab.Screen options={{ headerShown: false }}  name="Cỡ Giày" component={SizeShoesScreen} />
+      <Tab.Screen options={{ headerShown: false }}  name="My Shop" component={MyShopScreen} />
+
     </Tab.Navigator>
   );
 }

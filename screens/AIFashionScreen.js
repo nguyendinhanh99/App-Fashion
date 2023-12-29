@@ -84,6 +84,7 @@ export default function AIFashionScreen() {
         filterFashionData();  // Gọi hàm lọc thời trang
         const currentSeason = getSeason();
         console.log(`Current season: ${currentSeason}`);
+
     };
     /// lấy mùa 
     const getSeason = () => {
@@ -100,7 +101,7 @@ export default function AIFashionScreen() {
             return 'Đông';
         }
     }
-    
+
 
     // Hàm kiểm tra xem trang phục có thuộc mùa không
     const isFashionInSeason = (item, currentSeason) => {
@@ -108,21 +109,21 @@ export default function AIFashionScreen() {
             "áo khoác", "áo dự nhiệt", "áo len", "áo hoodie", "quần áo mùa đông",
             "găng tay", "mũ len", "áo sơ mi dài tay", "áo khoác chống nước", "giày ấm", "nỉ"
         ];
-    
+
         const summerKeywords = [
             "áo sơ mi ngắn tay", "quần short", "váy hè", "đồ bơi", "mũ nắng", "áo lót"
         ];
-    
+
         const springKeywords = [
             "áo khoác bomber", "áo sơ mi dài tay", "quần jogger", "áo len dài tay", "áo khoác mùa xuân"
         ];
-    
+
         const fallKeywords = [
             "áo khoác nhẹ", "áo len mỏng", "quần jeans", "áo khoác gió", "giày thể thao"
         ];
-    
+
         let seasonKeywords;
-    
+
         switch (currentSeason) {
             case 'Đông':
                 seasonKeywords = winterKeywords;
@@ -140,14 +141,39 @@ export default function AIFashionScreen() {
                 seasonKeywords = [];
                 break;
         }
-    
+
         // Kiểm tra xem productName có chứa từ khóa của mùa đó hay không
         return seasonKeywords.some(keyword => item.productName.toLowerCase().includes(keyword.toLowerCase()));
     };
-    
-    
+    const isFashionInColor = (item, colorInfo) => {
+        // Kiểm tra xem trường màu sắc có tồn tại
+        if (!item.color) {
+            return false;
+        }
+
+        // Chuẩn hóa màu sắc và danh sách màu sắc
+        const normalizedColor = item.color.toLowerCase();
+        const normalizedUseColors = colorInfo.useColors.map(color => color.toLowerCase());
+        const normalizedDoNotUseColors = colorInfo.doNotUseColors.map(color => color.toLowerCase());
+
+        // Kiểm tra xem màu sắc của trang phục có trong useColors và không nằm trong doNotUseColors hay không
+        const isInUseColors = normalizedUseColors.some(color => normalizedColor.includes(color));
+        const isNotInDoNotUseColors = !normalizedDoNotUseColors.some(color => normalizedColor.includes(color));
+
+        return isInUseColors && isNotInDoNotUseColors;
+    };
+
+
     const filterFashionData = () => {
+        // Lấy thông tin mùa và màu sắc
         const currentSeason = getSeason();
+        const colorInfo = colorData();
+    
+        // Kiểm tra xem có thông tin màu sắc không
+        if (!colorInfo) {
+            console.error('Không có thông tin màu sắc.');
+            return;
+        }
     
         // Lấy thông tin chiều cao và cân nặng từ người dùng
         const customerSize = {
@@ -155,8 +181,8 @@ export default function AIFashionScreen() {
             weight: parseFloat(bodyWeight),
         };
     
-        // Lọc danh sách thời trang dựa trên chiều cao và cân nặng
-        const allFashionData = FashionDatas.filter(item => {
+        // Lọc dữ liệu thời trang
+        const filteredFashionData = FashionDatas.filter(item => {
             // Tìm thông tin kích thước phù hợp từ SizeAnalysisComponent
             const sizeInfo = SizeAnalysisComponent.find(size => {
                 const { min: minHeight, max: maxHeight } = size.heightRange;
@@ -171,23 +197,65 @@ export default function AIFashionScreen() {
                 return isHeightInRange && isWeightInRange;
             });
     
-            // Nếu tìm thấy thông tin kích thước, kiểm tra xem size của thời trang có phù hợp không
-            return sizeInfo && sizeInfo.size === item.size;
+            // Kiểm tra chất liệu vải và lấy chất liệu có tỷ lệ lớn nhất
+            const dominantMaterial = getDominantMaterial(item.material);
+            const isFabricMatched = fabric === '' || (
+                item.material &&
+                dominantMaterial.includes(fabric.toLowerCase())
+            );
+    
+            // Kiểm tra các điều kiện để quyết định mục thời trang có phù hợp không
+            return (
+                sizeInfo &&
+                sizeInfo.size === item.size &&
+                isFashionInSeason(item, currentSeason) &&
+                isFashionInColor(item, colorInfo) &&
+                isFabricMatched
+            );
         });
     
-        // Lọc ra các sản phẩm thuộc mùa hiện tại
-        const currentSeasonFashionData = allFashionData.filter(item => isFashionInSeason(item, currentSeason));
+        // Sắp xếp dữ liệu thời trang
+        const sortedFashionData = filteredFashionData.sort((a, b) => {
+            const isAInSeason = isFashionInSeason(a, currentSeason);
+            const isBInSeason = isFashionInSeason(b, currentSeason);
     
-        // Lọc ra các sản phẩm không thuộc mùa hiện tại
-        const otherFashionData = allFashionData.filter(item => !isFashionInSeason(item, currentSeason));
+            if (isAInSeason && !isBInSeason) {
+                return -1;
+            } else if (!isAInSeason && isBInSeason) {
+                return 1;
+            }
     
-        // Sắp xếp mảng để đưa trang phục thuộc mùa hiện tại lên trên
-        const sortedFashionData = currentSeasonFashionData.concat(otherFashionData);
+            return 0;
+        });
     
-        // Cập nhật state filteredFashion với kết quả lọc và sắp xếp
+        // Cập nhật state với kết quả lọc và sắp xếp
         setFilteredFashion(sortedFashionData);
+    
+        // Log kết quả để kiểm tra
+        console.log(sortedFashionData);
     };
     
+    // Hàm để lấy chất liệu có tỷ lệ lớn nhất
+    const getDominantMaterial = (materialString) => {
+        const materialArray = materialString.split(',').map(material => material.trim());
+    
+        let dominantMaterial = '';
+        let maxPercentage = 0;
+    
+        materialArray.forEach(material => {
+            const match = material.match(/(\w+)\s(\d+)%/);
+    
+            if (match && match[2] && parseInt(match[2], 10) > maxPercentage) {
+                maxPercentage = parseInt(match[2], 10);
+                dominantMaterial = match[1].toLowerCase();
+            }
+        });
+    
+        return dominantMaterial;
+    };
+    
+
+
 
     const renderFashionData = () => {
         if (filteredFashion.length === 0) {
@@ -235,7 +303,7 @@ export default function AIFashionScreen() {
                                 fontSize: 20,
                                 fontWeight: "600"
                             }}
-                        >Cỡ: {item.size}</Text>
+                        >Cỡ: {item.size}Màu áo:  {item.color}</Text>
                         <Image
                             source={item.image}
                             style={{

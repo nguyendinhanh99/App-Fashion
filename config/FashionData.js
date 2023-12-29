@@ -2,14 +2,14 @@ const FashionDatas = [
     {
         id: 1,
         brand: "Adidas",
-        productName: "Áo Adidas",
+        productName: "Áo khoác  Adidas",
         cloting: "Áo giữ nhiệt",
         pants : "",
         sex: "male",//Female
         size: "L",
-        color: "Đỏ",
+        color: "Màu Trắng",
         retailPrice : "1.000.000",
-        material : "Plyester 10%, Elostane 90%",
+        material : "silk 57%, cotton 43%",
         image: require('../config/Images/anh1.jpg'), // Đường dẫn tới hình ảnh cho size XS
 
     },
@@ -21,7 +21,7 @@ const FashionDatas = [
         pants : "",
         sex: "male",//Female
         size: "M",
-        color: "Xanh",
+        color: "Màu Xanh",
         retailPrice : "1.990.000",
         material : "Plyester 10%, Elostane 90%",
         image: require('../config/Images/anh2.jpg'), // Đường dẫn tới hình ảnh cho size XS
@@ -269,7 +269,7 @@ const FashionDatas = [
         pants: "",
         sex: "female",
         size: "L",
-        color: "vàng",
+        color: "Màu Vàng Mustard",
         retailPrice: "1.900.000",
         material: "Cotton 90%, Spandex 10%",
         image: require('../config/Images/anh9.png'),
@@ -295,7 +295,7 @@ const FashionDatas = [
         pants : "",
         sex: "male",//Female
         size: "L",
-        color: "Đỏ",
+        color: "Màu Burgundy",
         retailPrice : "1.000.000",
         material : "Plyester 10%, Elostane 90%",
         image: require("/Users/anhnguyendinh/Desktop/NiNo/config/anh13.jpeg"), // Đường dẫn tới hình ảnh cho size XS
@@ -309,10 +309,24 @@ const FashionDatas = [
         pants : "",
         sex: "male",//Female
         size: "L",
-        color: "Đỏ",
+        color: "Trắng",
         retailPrice : "1.000.000",
         material : "Plyester 10%, Elostane 90%",
         image: require("/Users/anhnguyendinh/Desktop/NiNo/config/anh13.jpeg"), // Đường dẫn tới hình ảnh cho size XS
+
+    },
+    {
+        id: 24,
+        brand: "Adidas",
+        productName: "Áo khoác  Adidas",
+        cloting: "Áo giữ nhiệt",
+        pants : "",
+        sex: "male",//Female
+        size: "L",
+        color: "Màu nâu nhạt",
+        retailPrice : "1.000.000",
+        material : "Plyester 10%, Elostane 90%",
+        image: require('../config/Images/anh1.jpg'), // Đường dẫn tới hình ảnh cho size XS
 
     },
 ]

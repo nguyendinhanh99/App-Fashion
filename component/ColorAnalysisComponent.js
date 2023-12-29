@@ -13,7 +13,7 @@ const ColorAnalysisComponent = [
             "Màu Nâu Nhạt",
             "Màu Cobalt"
         ],
-        doNotUseColors: ["Hồng", "be", "tím"]
+        doNotUseColors: [ "be", "tím"]
     },
     {
         paletteName: "B",
