@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
     View,
     Text,
@@ -9,12 +9,12 @@ import AppStyle from "../theme";
 import TabView from "../component/TabView";
 
 
-export default function MyShopScreen () {
+export default function MyShopScreen() {
     return (
         <View>
-            <TabView/>
+            <TabView />
             <Text>
-               helo my fed
+                helo my fed
             </Text>
         </View>
     )

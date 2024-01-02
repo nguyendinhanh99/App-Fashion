@@ -7,12 +7,14 @@ const Height = Dimensions.get('window').height;
 const SizeShoesStyle = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#E0FFFF",
+
     },
     TitleView: {
         flex: 1,
         justifyContent: "flex-end",
         alignItems: "center",
-        marginTop : 15
+        marginTop: 15
     },
     TitleStyle: {
         fontSize: 25,
@@ -28,12 +30,12 @@ const SizeShoesStyle = StyleSheet.create({
     },
     searchInput: {
         flex: 2.5,
-        paddingLeft:20
+        paddingLeft: 20
     },
-    searchInputTitle:{
-        fontSize : 18,
-        padding:8,
-        color : "#787878"
+    searchInputTitle: {
+        fontSize: 18,
+        padding: 8,
+        color: "#787878"
     },
     searchTextInput: {
         height: 40,
@@ -49,61 +51,69 @@ const SizeShoesStyle = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    searchButtomStyle : {
-        flex :0.8 ,
-        backgroundColor : "#1E90FF",
-        width: Width-40,
+    searchButtomStyle: {
+        flex: 0.8,
+        backgroundColor: "#1E90FF",
+        width: Width - 40,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 25,
     },
-    searchButtomTextStyle : {
-        fontSize : 25,
-        fontWeight : "600",
-        color : "#FFF"
+    searchButtomTextStyle: {
+        fontSize: 25,
+        fontWeight: "600",
+        color: "#FFF"
     },
     searchShowData: {
         flex: 6.2,
-        alignItems : "center",
-        marginTop :10
+        alignItems: "center",
+        marginTop: 10,
+        backgroundColor: "#E0FFFF",
+
     },
-    searchShowDataFlex : {
-        flex : 1,
-        width : Width-10,
-        backgroundColor : "#E8E8E8",
-        borderRadius : 10,
+    searchShowDataFlex: {
+        flex: 1,
+        width: Width - 10,
+        backgroundColor: "#E0FFFF",
+        borderRadius: 10,
     },
-    searchShowDataText :{
-        fontSize : 20,
-        paddingLeft : 10,
-        fontWeight : "500",
+    searchShowDataText: {
+        fontSize: 20,
+        paddingLeft: 10,
+        fontWeight: "500",
         padding: 5
     },
     sexButtomView: {
-        flex : 0.8,
-        flexDirection : "row",
-        padding:20
+        flex: 0.8,
+        flexDirection: "row",
+        padding: 20
     },
     sexButtomStyle1: {
-        flex : 1,
-        borderWidth:0.4,
-        justifyContent : "center",
-        alignItems : "center",
-        margin:5,
-        borderRadius : 10
+        flex: 1,
+        borderWidth: 0.4,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 5,
+        borderRadius: 10
     },
     sexButtomStyle2: {
-        flex : 1,
-        justifyContent : "center",
-        alignItems : "center",
-        margin:5,
-        borderRadius : 10,
-        borderWidth:0.4
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 5,
+        borderRadius: 10,
+        borderWidth: 0.4
     },
     sexButtomText: {
-        fontSize : 19,
+        fontSize: 19,
         fontWeight: "500",
-        color  : "#696969"
+        color: "#696969"
+    },
+    showItem: {
+        backgroundColor: "#FFF",
+        margin: 5,
+        borderRadius: 10,
+        flexDirection: 'row'
     }
 });
 

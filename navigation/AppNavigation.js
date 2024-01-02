@@ -9,6 +9,7 @@ import AIFashionScreen from '../screens/AIFashionScreen';
 import MyShopScreen from '../screens/myShopScreen';
 import CalculateScreen from '../screens/calculateScreen';
 import FeatureScreen from '../screens/featureScreen';
+import UserShopScreen from '../screens/UserShopScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -39,6 +40,14 @@ function FeatureStack() {
     </Stack.Navigator>
   );
 }
+function UserShopStack() {
+  return (
+    <Stack.Navigator initialRouteName='userShop'>
+    <Stack.Screen name="userShop" component={UserShopScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="myShop" component={MyShopScreen} options={{ headerShown: false }} />
+  </Stack.Navigator>
+  )
+}
 
 function MyTabs() {
   return (
@@ -46,7 +55,7 @@ function MyTabs() {
       <Tab.Screen options={{ headerShown: false }} name="Home" component={HomeStack} />
       <Tab.Screen options={{ headerShown: false }} name="AIFashion" component={AIFashionStack} />
       <Tab.Screen options={{ headerShown: false }} name="Tính năng" component={FeatureStack} />
-      <Tab.Screen options={{ headerShown: false }} name="MyShop" component={MyShopScreen} />
+      <Tab.Screen options={{ headerShown: false }} name="Tôi" component={UserShopStack} />
     </Tab.Navigator>
   );
 }

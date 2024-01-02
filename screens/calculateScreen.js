@@ -64,11 +64,11 @@ export default function CalculateScreen() {
     };
 
     const renderResultItem = ({ item }) => (
-        <Text style={AppStyle.HomeScreenStyle.historyItem}>Sản phẩm trước: {item} VND</Text>
+        <Text style={AppStyle.CalculateScreenStyle.historyItem}>Sản phẩm trước: {item} VND</Text>
     );
 
     return (
-        <View style={AppStyle.HomeScreenStyle.container}>
+        <View style={AppStyle.CalculateScreenStyle.container}>
             
             <View
                 style={{
@@ -88,23 +88,23 @@ export default function CalculateScreen() {
                     Giảm giá sản phẩm
                 </Text>
             </View>
-            <Text style={AppStyle.HomeScreenStyle.titleStyle}>Giá gốc sản phẩm</Text>
-            <View style={AppStyle.HomeScreenStyle.inputContainer}>
+            <Text style={AppStyle.CalculateScreenStyle.titleStyle}>Giá gốc sản phẩm</Text>
+            <View style={AppStyle.CalculateScreenStyle.inputContainer}>
                 <TextInput
                     placeholder="20.000.000"
-                    style={AppStyle.HomeScreenStyle.textInput}
+                    style={AppStyle.CalculateScreenStyle.textInput}
                     value={amount}
                     onChangeText={handleAmountChange}
                     keyboardType="numeric"
                 />
-                <Text style={AppStyle.HomeScreenStyle.historyItem}>Giá vừa nhập: {displayedAmount} VND</Text>
+                <Text style={AppStyle.CalculateScreenStyle.historyItem}>Giá vừa nhập: {displayedAmount} VND</Text>
                 {amount.length > 0 && (
                     <TouchableOpacity
-                        style={AppStyle.HomeScreenStyle.clearButton}
+                        style={AppStyle.CalculateScreenStyle.clearButton}
                         onPress={clearInput}
                     >
-                        <View style={AppStyle.HomeScreenStyle.clearButtonText}>
-                            <Text style={AppStyle.HomeScreenStyle.clearButtonTextStyle}>
+                        <View style={AppStyle.CalculateScreenStyle.clearButtonText}>
+                            <Text style={AppStyle.CalculateScreenStyle.clearButtonTextStyle}>
                                 Xoá
                             </Text>
                         </View>
@@ -112,16 +112,16 @@ export default function CalculateScreen() {
                 )}
             </View>
 
-            <Text style={AppStyle.HomeScreenStyle.titleStyle}>Phần trăm</Text>
+            <Text style={AppStyle.CalculateScreenStyle.titleStyle}>Phần trăm</Text>
             <TextInput
                 placeholder="20%"
-                style={AppStyle.HomeScreenStyle.textInput}
+                style={AppStyle.CalculateScreenStyle.textInput}
                 value={percentage}
                 onChangeText={(text) => setPercentage(text)}
                 keyboardType="numeric"
             />
 
-            <Text style={AppStyle.HomeScreenStyle.titleAmountStyle}>
+            <Text style={AppStyle.CalculateScreenStyle.titleAmountStyle}>
                 Sau giảm giá:  {results.length > 0 ? results[0] : formatNumber(amount)} VND
             </Text>
 
@@ -130,22 +130,22 @@ export default function CalculateScreen() {
                 data={results}
                 renderItem={renderResultItem}
                 keyExtractor={(item, index) => index.toString()}
-                style={AppStyle.HomeScreenStyle.historyContainer}
+                style={AppStyle.CalculateScreenStyle.historyContainer}
             />
 
-            <View style={AppStyle.HomeScreenStyle.buttomView}>
+            <View style={AppStyle.CalculateScreenStyle.buttomView}>
                 <TouchableOpacity
-                    style={AppStyle.HomeScreenStyle.GiamButtomStyle}
+                    style={AppStyle.CalculateScreenStyle.GiamButtomStyle}
                     onPress={handleIncrease}
                 >
-                    <Text style={AppStyle.HomeScreenStyle.buttomTextStyle}>Tăng Giá</Text>
+                    <Text style={AppStyle.CalculateScreenStyle.buttomTextStyle}>Tăng Giá</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={AppStyle.HomeScreenStyle.TangButtomStyle}
+                    style={AppStyle.CalculateScreenStyle.TangButtomStyle}
                     onPress={handleDecrease}
                 >
-                    <Text style={AppStyle.HomeScreenStyle.buttomTextStyle}>Giảm Giá</Text>
+                    <Text style={AppStyle.CalculateScreenStyle.buttomTextStyle}>Giảm Giá</Text>
                 </TouchableOpacity>
             </View>
             <GoBackButtomView/>

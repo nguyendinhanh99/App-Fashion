@@ -274,12 +274,7 @@ export default function SizeShoesScreen() {
                                 data={searchResults}
                                 keyExtractor={(item) => item.id.toString()}
                                 renderItem={({ item }) => (
-                                    <View style={{
-                                        backgroundColor:"#F0FFF0",
-                                        margin: 5,
-                                        borderRadius: 10,
-                                        flexDirection: 'row'
-                                    }}>
+                                    <View style={AppStyle.SizeShoesStyle.showItem}>
                                         <View
                                         style = {{
                                             flex :1
