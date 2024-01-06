@@ -10,6 +10,7 @@ import MyShopScreen from '../screens/myShopScreen';
 import CalculateScreen from '../screens/calculateScreen';
 import FeatureScreen from '../screens/featureScreen';
 import UserShopScreen from '../screens/UserShopScreen';
+import CartScreen from '../screens/CartScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -18,6 +19,8 @@ function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Tính Phần Trăm" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="UserShopCart" component={CartScreen} options={{ headerShown: false }} />
+
     </Stack.Navigator>
   );
 }
@@ -45,6 +48,7 @@ function UserShopStack() {
     <Stack.Navigator initialRouteName='userShop'>
     <Stack.Screen name="userShop" component={UserShopScreen} options={{ headerShown: false }} />
     <Stack.Screen name="myShop" component={MyShopScreen} options={{ headerShown: false }} />
+
   </Stack.Navigator>
   )
 }

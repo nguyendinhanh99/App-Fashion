@@ -6,8 +6,10 @@ const images = {
     SizeIcon: require('../icons/size.png'),
     MyImage: require('../icons/myImage.jpg'),
     StoreIcon: require('../icons/store.png'),
-    ShoppingIcon: require('../icons/shopping.png'),
+    ShoppingIcon: require('../icons/cart.png'),
     SettingIcon: require('../icons/setting.png'),
-    AddIcon: require('../icons/add.png')
+    AddIcon: require('../icons/add.png'),
+    RobotIcon: require('../icons/robot.png'),
+    CartNullIcon: require('../icons/cartNull.png')
   };
   export default images;

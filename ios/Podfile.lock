@@ -1,4 +1,5 @@
 PODS:
+  - BEMCheckBox (1.4.1)
   - boost (1.83.0)
   - BVLinearGradient (2.8.3):
     - React-Core
@@ -1117,6 +1118,9 @@ PODS:
     - React-perflogger (= 0.73.0)
   - RNCAsyncStorage (1.21.0):
     - React-Core
+  - RNCCheckbox (0.5.16):
+    - BEMCheckBox (~> 1.4)
+    - React-Core
   - RNScreens (3.29.0):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1200,11 +1204,13 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCCheckbox (from `../node_modules/@react-native-community/checkbox`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - BEMCheckBox
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -1321,12 +1327,15 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCCheckbox:
+    :path: "../node_modules/@react-native-community/checkbox"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   boost: 26fad476bfa736552bbfa698a06cc530475c1505
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -1389,10 +1398,11 @@ SPEC CHECKSUMS:
   React-utils: 42708ea436853045ef1eaff29996813d9fbbe209
   ReactCommon: 851280fb976399ca1aabc74cc2c3612069ea70a2
   RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
+  RNCCheckbox: 75255b03e604bbcc26411eb31c4cbe3e3865f538
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: 20d6a900dcc8d61d5e3b799bbf627cc34474a8c4
 
 PODFILE CHECKSUM: 16dbf8769aed0f4bdc758c4a361a09b28b58a1b2
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.14.3

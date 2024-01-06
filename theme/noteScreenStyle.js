@@ -7,6 +7,7 @@ const Height = Dimensions.get('window').height;
 const NoteScreenStyle = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#E0FFFF",
     },
     TitleView: {
         flex: 0.5,
@@ -28,7 +29,8 @@ const NoteScreenStyle = StyleSheet.create({
         paddingHorizontal: 8,
         textAlignVertical: 'top',
         borderRadius: 10,
-        fontSize : 18
+        fontSize : 18,
+        backgroundColor : "#FFF"
     },
     buttomAddNote: {
         backgroundColor: '#4CAF50',

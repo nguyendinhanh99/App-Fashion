@@ -35,7 +35,7 @@ const SizeShoesStyle = StyleSheet.create({
     searchInputTitle: {
         fontSize: 18,
         padding: 8,
-        color: "#787878"
+        color: "#787878",
     },
     searchTextInput: {
         height: 40,
@@ -45,6 +45,7 @@ const SizeShoesStyle = StyleSheet.create({
         borderRadius: 10,
         paddingLeft: 10,
         fontSize: 23,
+        backgroundColor: "#E8E8E8"
     },
     searchButtom: {
         flex: 1,
@@ -113,7 +114,15 @@ const SizeShoesStyle = StyleSheet.create({
         backgroundColor: "#FFF",
         margin: 5,
         borderRadius: 10,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 1,
+            height: 5,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     }
 });
 

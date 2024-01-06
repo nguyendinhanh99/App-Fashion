@@ -6,6 +6,7 @@ import MyShopScreenStyle from "./myShopScreenStyle"
 import FeaturScreenStyle from "./featureScreenStyle"
 import UserShopScreenStyle from "./userShopScreenStyle"
 import CalculateScreenStyle from "./calculateScreenStyle"
+import CartScreenStyle from "./cartScreenStyle"
 
 const AppStyle = {
     HomeScreenStyle,
@@ -15,7 +16,8 @@ const AppStyle = {
     MyShopScreenStyle,
     FeaturScreenStyle,
     UserShopScreenStyle,
-    CalculateScreenStyle
+    CalculateScreenStyle,
+    CartScreenStyle
 }
 
 export default AppStyle

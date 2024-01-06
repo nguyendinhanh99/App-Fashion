@@ -13,7 +13,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import images from "../assest/icons";
 
 
-export default function UserShopScreen() {
+export default function UserShopScreen({ navigation }) {
+    const [cartItems, setCartItems] = useState([]); // Đây là biến chứa danh sách sản phẩm
+
     return (
         <View style={AppStyle.UserShopScreenStyle.ScrollViewStyle}>
             <TabView />
@@ -83,25 +85,27 @@ export default function UserShopScreen() {
                                 source={images.StoreIcon}
                                 style={AppStyle.UserShopScreenStyle.shopButtomImageStyle}
                             />
-                            <Text 
-                            style = {AppStyle.UserShopScreenStyle.shopButtomTextStyle}
+                            <Text
+                                style={AppStyle.UserShopScreenStyle.shopButtomTextStyle}
                             >
                                 Shop của bạn
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={AppStyle.UserShopScreenStyle.shopButtomStyle}
-                        >
+                            onPress={() => navigation.navigate('UserShopCart', { cartItems: cartItems })}
+                            >
                             <Image
                                 source={images.ShoppingIcon}
                                 style={AppStyle.UserShopScreenStyle.shopButtomImageStyle}
                             />
-                            <Text 
-                            style = {AppStyle.UserShopScreenStyle.shopButtomTextStyle}
+                            <Text
+                                style={AppStyle.UserShopScreenStyle.shopButtomTextStyle}
                             >
                                 Giỏ hàng
                             </Text>
                         </TouchableOpacity>
+
                     </View>
 
                     <View
@@ -114,8 +118,8 @@ export default function UserShopScreen() {
                                 source={images.SettingIcon}
                                 style={AppStyle.UserShopScreenStyle.shopButtomImageStyle}
                             />
-                            <Text 
-                            style = {AppStyle.UserShopScreenStyle.shopButtomTextStyle}
+                            <Text
+                                style={AppStyle.UserShopScreenStyle.shopButtomTextStyle}
                             >
                                 Cài đặt
                             </Text>
@@ -127,8 +131,8 @@ export default function UserShopScreen() {
                                 source={images.AddIcon}
                                 style={AppStyle.UserShopScreenStyle.shopButtomImageStyle}
                             />
-                            <Text 
-                            style = {AppStyle.UserShopScreenStyle.shopButtomTextStyle}
+                            <Text
+                                style={AppStyle.UserShopScreenStyle.shopButtomTextStyle}
                             >
                                 Thêm
                             </Text>
