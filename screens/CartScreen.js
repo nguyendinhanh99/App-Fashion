@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import TabView from '../component/TabView';
 import AppStyle from '../theme';
@@ -9,28 +9,45 @@ const convertToNumber = (priceString) => {
     return parseFloat(priceString.replace(/\./g, ''));
 };
 
+const quantityReducer = (state, action) => {
+    switch (action.type) {
+        case 'INCREASE':
+            return { ...state, [action.itemId]: (state[action.itemId] || 0) + 1 };
+        case 'DECREASE':
+            return { ...state, [action.itemId]: Math.max(0, (state[action.itemId] || 0) - 1) };
+        case 'INITIALIZE':
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
 const CartScreen = ({ route }) => {
     const [cartItems, setCartItems] = useState([]);
     const [checkedItems, setCheckedItems] = useState({});
-    const [quantityItems, setQuantityItems] = useState({});
+    const [quantityItems, dispatchQuantity] = useReducer(quantityReducer, {});
 
     useEffect(() => {
         const loadCartItems = async () => {
             try {
-                if (route && route.params && route.params.cartItems) {
+                if (route?.params?.cartItems) {
                     setCartItems(route.params.cartItems);
                 }
 
                 const storedCheckedItems = await AsyncStorage.getItem('checkedItems');
                 if (storedCheckedItems) {
                     setCheckedItems(JSON.parse(storedCheckedItems));
-                    console.log('Loaded checkedItems successfully:', JSON.parse(storedCheckedItems));
+                    console.log('Loaded checkedItems successfully:', checkedItems);
                 }
 
                 const storedQuantityItems = await AsyncStorage.getItem('quantityItems');
                 if (storedQuantityItems) {
-                    setQuantityItems(JSON.parse(storedQuantityItems));
-                    console.log('Loaded quantityItems successfully:', JSON.parse(storedQuantityItems));
+                    const parsedQuantityItems = JSON.parse(storedQuantityItems);
+
+                    if (Object.keys(parsedQuantityItems).length > 0) {
+                        dispatchQuantity({ type: 'INITIALIZE', payload: parsedQuantityItems });
+                        console.log('Loaded quantityItems successfully:', parsedQuantityItems);
+                    }
                 }
             } catch (error) {
                 console.error('Error loading data from AsyncStorage:', error);
@@ -40,30 +57,30 @@ const CartScreen = ({ route }) => {
         loadCartItems();
     }, [route]);
 
-    useEffect(() => {
-        const saveCheckedItems = async () => {
-            try {
-                await AsyncStorage.setItem('checkedItems', JSON.stringify(checkedItems));
-                console.log('Saved checkedItems successfully:', checkedItems);
-            } catch (error) {
-                console.error('Error saving checkedItems:', error);
-            }
-        };
+    const saveCheckedItems = async (newCheckedItems) => {
+        try {
+            await AsyncStorage.setItem('checkedItems', JSON.stringify(newCheckedItems));
+            console.log('Saved checkedItems successfully:', newCheckedItems);
+        } catch (error) {
+            console.error('Error saving checkedItems:', error);
+        }
+    };
 
-        saveCheckedItems();
+    const saveQuantityItems = async (newQuantityItems) => {
+        try {
+            await AsyncStorage.setItem('quantityItems', JSON.stringify(newQuantityItems));
+            console.log('Saved quantityItems successfully:', newQuantityItems);
+        } catch (error) {
+            console.error('Error saving quantityItems:', error);
+        }
+    };
+
+    useEffect(() => {
+        saveCheckedItems(checkedItems);
     }, [checkedItems]);
 
     useEffect(() => {
-        const saveQuantityItems = async () => {
-            try {
-                await AsyncStorage.setItem('quantityItems', JSON.stringify(quantityItems));
-                console.log('Saved quantityItems successfully:', quantityItems);
-            } catch (error) {
-                console.error('Error saving quantityItems:', error);
-            }
-        };
-
-        saveQuantityItems();
+        saveQuantityItems(quantityItems);
     }, [quantityItems]);
 
     const calculateTotalRetailPrice = () => {
@@ -79,42 +96,11 @@ const CartScreen = ({ route }) => {
     const totalRetailPrice = calculateTotalRetailPrice();
 
     const decreaseQuantity = (itemId) => {
-        setQuantityItems((prevQuantityItems) => {
-            const newQuantity = (prevQuantityItems[itemId] || 0) - 1;
-            const updatedQuantityItems = {
-                ...prevQuantityItems,
-                [itemId]: Math.max(0, newQuantity),
-            };
-            saveQuantityItems(updatedQuantityItems); // Lưu trạng thái mới vào AsyncStorage
-            return updatedQuantityItems;
-        });
+        dispatchQuantity({ type: 'DECREASE', itemId });
     };
 
     const increaseQuantity = (itemId) => {
-        setQuantityItems((prevQuantityItems) => {
-            const updatedQuantityItems = {
-                ...prevQuantityItems,
-                [itemId]: (prevQuantityItems[itemId] || 0) + 1,
-            };
-            saveQuantityItems(updatedQuantityItems); // Lưu trạng thái mới vào AsyncStorage
-            return updatedQuantityItems;
-        });
-    };
-
-    const saveQuantityItems = async (newQuantityItems) => {
-        try {
-            // Lưu trạng thái mới vào AsyncStorage
-            await AsyncStorage.setItem('quantityItems', JSON.stringify(newQuantityItems));
-
-            // Log giá trị mới của quantityItems
-            AsyncStorage.getItem('quantityItems').then((value) => {
-                console.log('Updated Quantity Items:', JSON.parse(value));
-            });
-
-            console.log('Saved quantityItems successfully');
-        } catch (error) {
-            console.error('Error saving quantityItems:', error);
-        }
+        dispatchQuantity({ type: 'INCREASE', itemId });
     };
 
     return (
@@ -162,7 +148,7 @@ const CartScreen = ({ route }) => {
                                     <Text style={AppStyle.CartScreenStyle.checkboxButtomText}>-</Text>
                                 </TouchableOpacity>
                                 <Text style={AppStyle.CartScreenStyle.checkboxText}>
-                                    {quantityItems[item.id] !== undefined ? quantityItems[item.id] : 0}
+                                    {quantityItems[item.id] !== undefined ? quantityItems[item.id] : 1}
                                 </Text>
                                 <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
                                     <Text style={AppStyle.CartScreenStyle.checkboxButtomText}>+</Text>
