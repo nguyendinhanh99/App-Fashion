@@ -10,6 +10,8 @@ const images = {
     SettingIcon: require('../icons/setting.png'),
     AddIcon: require('../icons/add.png'),
     RobotIcon: require('../icons/robot.png'),
-    CartNullIcon: require('../icons/cartNull.png')
+    CartNullIcon: require('../icons/cartNull.png'),
+    AddCartIcon: require('../icons/addCart.png'),
+    goBackIcon : require('../icons/back.png')
   };
   export default images;

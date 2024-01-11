@@ -7,7 +7,7 @@ const Height = Dimensions.get('window').height;
 const CartScreenStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#E0FFFF",
+        backgroundColor: "#FFF",
     },
     nullCart: {
         flex: 1,
@@ -21,7 +21,8 @@ const CartScreenStyle = StyleSheet.create({
     },
     imageStyle: {
         height: 80,
-        width: 80
+        width: 80,
+        borderRadius:10
     },
     title: {
         fontSize: 24,
@@ -30,15 +31,17 @@ const CartScreenStyle = StyleSheet.create({
         padding: 10
     },
     productContainerView: {
-        backgroundColor: "#FFF",
-        marginBottom: 15,
-        margin: 5
+        backgroundColor: "#d4e7ed",
+        marginBottom: 5,
+        margin: 5,
+        borderRadius:10,
+        height:150
     },
     productContainer: {
         flexDirection: 'row',
         borderRadius: 8,
         padding: 5,
-        backgroundColor: "#FFF",
+        backgroundColor: "#d4e7ed",
     },
     productImage: {
         width: 80,
@@ -78,18 +81,69 @@ const CartScreenStyle = StyleSheet.create({
     buttomViewNumber: {
         flex: 8,
         justifyContent : "center",
-        alignItems: "center",
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: "center"
     },
     checkbox: {
         alignSelf: 'center',
     },
     checkboxText: {
-        fontSize:18
+        fontSize:18,
+        padding:5,
+        borderWidth:0.3,
+        marginTop:5,
+        marginBottom:5,
+        paddingLeft:15,
+        paddingEnd:15
     },
     checkboxButtomText: {
         fontSize:18,
-        padding:10
+        padding:5,
+        borderWidth:0.3,
+        marginTop:5,
+        marginBottom:5,
+        paddingLeft:15,
+        paddingEnd:15
+    },
+    confirmDeleteModal : {
+        margin:5
+    },
+    confirmDeleteModalTitle: {
+        fontSize:22,
+        paddingLeft:10,
+        color: "#fd8258",
+
+    },
+    confirmDeleteModalButtom1: {
+        backgroundColor: "#06969e",
+        borderRadius:109,
+        justifyContent: "center",
+        alignItems:"center",
+        margin:5,
+        padding:3
+    },
+    confirmDeleteModalButtom2: {
+        backgroundColor: "#e9674c",
+        borderRadius:109,
+        justifyContent: "center",
+        alignItems:"center",
+        margin:5,
+        padding:3
+    },
+    confirmDeleteModalButtomText: {
+        fontSize:20,
+        padding: 3,
+        color: "#FFF",
+        fontWeight: "600"
+    },
+    buttomViewDelete: {
+        justifyContent: "flex-end",
+        alignItems: "flex-start"
+    },
+    buttomViewDeleteText : {
+        fontSize : 18,
+        color: "#fd8258",
+        padding: 15
     }
 });
 

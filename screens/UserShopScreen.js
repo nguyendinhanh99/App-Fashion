@@ -7,6 +7,7 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native'
+import { useSelector, useDispatch } from 'react-redux';
 import AppStyle from "../theme";
 import TabView from "../component/TabView";
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,7 +15,8 @@ import images from "../assest/icons";
 
 
 export default function UserShopScreen({ navigation }) {
-    const [cartItems, setCartItems] = useState([]); // Đây là biến chứa danh sách sản phẩm
+    const cartItems = useSelector(state => state.cart.cartItems) || [];
+
 
     return (
         <View style={AppStyle.UserShopScreenStyle.ScrollViewStyle}>
@@ -94,7 +96,7 @@ export default function UserShopScreen({ navigation }) {
                         <TouchableOpacity
                             style={AppStyle.UserShopScreenStyle.shopButtomStyle}
                             onPress={() => navigation.navigate('UserShopCart', { cartItems: cartItems })}
-                            >
+                        >
                             <Image
                                 source={images.ShoppingIcon}
                                 style={AppStyle.UserShopScreenStyle.shopButtomImageStyle}
@@ -104,6 +106,9 @@ export default function UserShopScreen({ navigation }) {
                             >
                                 Giỏ hàng
                             </Text>
+                            {cartItems.length > 0 && (
+                                    <Text style={{ color: 'red', fontSize: 20 }}>{cartItems.length}</Text>
+                            )}
                         </TouchableOpacity>
 
                     </View>

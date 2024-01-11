@@ -11,6 +11,8 @@ const FashionDatas = [
         retailPrice : "1.000.000",
         material : "silk 57%, cotton 43%",
         image: require('../config/Images/anh1.jpg'), // Đường dẫn tới hình ảnh cho size XS
+        image1: require('../config/Images/anh2.jpg'), // Đường dẫn tới hình ảnh cho size XS
+
     },
     {
         id: 2,
