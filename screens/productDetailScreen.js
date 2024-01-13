@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -18,16 +18,28 @@ const ProductDetailScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems) || [];
 
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [heartIconColor, setHeartIconColor] = useState('black');
+    const [isHeartIconPressed, setIsHeartIconPressed] = useState(false);
+
+
+
+    const handleSizeSelection = (size) => {
+        setSelectedSize(size);
+        // Thực hiện các thao tác khác nếu cần
+    };
+
+    const handleHeartIconPress = () => {
+        // Thay đổi trạng thái của hình ảnh khi nút được nhấn
+        setIsHeartIconPressed(!isHeartIconPressed);
+        // Thực hiện các thao tác khác khi nút được nhấn
+    };
+
     const handleAddToCart = () => {
         const isProductInCart = cartItems.some(item => item.id === product.id);
 
         if (!isProductInCart) {
             dispatch(addToCart(product));
-            Alert.alert(
-                'Thông báo !',
-                'Sản phẩm đã được thêm vào giỏ hàng.',
-                [{ text: 'Đóng', onPress: () => navigation.goBack() }]
-            );
         } else {
             Alert.alert(
                 'Thông báo !',
@@ -36,6 +48,24 @@ const ProductDetailScreen = ({ route, navigation }) => {
             );
         }
     };
+
+
+    const handleBuyToCart = () => {
+        const isProductInCart = cartItems.some(item => item.id === product.id);
+
+        if (!isProductInCart) {
+            dispatch(addToCart(product));
+            // Chuyển hướng ngay sau khi thêm sản phẩm vào giỏ hàng
+            navigation.navigate('UserShopCart');
+        } else {
+            Alert.alert(
+                'Thông báo !',
+                'Sản phẩm đã có trong giỏ hàng.',
+                [{ text: 'Đóng', onPress: () => navigation.navigate('UserShopCart') }]
+            );
+        }
+    };
+
 
     return (
         <View style={AppStyle.productDetailScreenStyle.container}>
@@ -61,14 +91,138 @@ const ProductDetailScreen = ({ route, navigation }) => {
             }}>
             </View>
             <View style={AppStyle.productDetailScreenStyle.productDetails}>
-                <Text style={AppStyle.productDetailScreenStyle.productName}>{product.productName}</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Hãng: ${product.brand}`}</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Dòng: ${product.cloting}`}</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Giới tính: ${product.sex}`}</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Cỡ áo: ${product.size}`}</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Giá: ${product.retailPrice}`}đ</Text>
-                <Text style={AppStyle.productDetailScreenStyle.productInfo}>{`Chất liệu: ${product.material}`}</Text>
+                <View
+                    style={{
+                        backgroundColor: "#FFF",
+                        marginTop: 5,
+                        paddingLeft: 10,
+                    }}
+                >
+                    <Text style={AppStyle.productDetailScreenStyle.productName}>{product.productName}</Text>
+                    <Text style={AppStyle.productDetailScreenStyle.productInfoBrand}>{`Hãng: ${product.brand}`}</Text>
+                    <Text style={AppStyle.productDetailScreenStyle.productInfoPrice}>{`Giá: ${product.retailPrice}`}đ</Text>
+
+                    <Text style={AppStyle.productDetailScreenStyle.productInfoCloting}>{`Dòng: ${product.cloting}`}</Text>
+                    <Text style={AppStyle.productDetailScreenStyle.productInfoSex}>{`Giới tính: ${product.sex}`}</Text>
+                    <Text style={AppStyle.productDetailScreenStyle.productInfoMaterial}>{`Chất liệu: ${product.material}`}</Text>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: "#FFF",
+                        marginTop: 5,
+                    }}
+                >
+                    <Text style={AppStyle.productDetailScreenStyle.selectSizeTitle}>Chọn Size</Text>
+                    <View style={AppStyle.productDetailScreenStyle.selectSizeButtomView}>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'XS' && { backgroundColor: '#FCD1AC' },
+                            ]}
+                            onPress={() => handleSizeSelection('XS')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>XS</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'S' ? { backgroundColor: '#FCD1AC' } : null,
+                            ]}
+                            onPress={() => handleSizeSelection('S')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>S</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'M' ? { backgroundColor: '#FCD1AC' } : null,
+                            ]}
+                            onPress={() => handleSizeSelection('M')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>M</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'L' ? { backgroundColor: '#FCD1AC' } : null,
+                            ]}
+                            onPress={() => handleSizeSelection('L')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>L</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'XL' ? { backgroundColor: '#FCD1AC' } : null,
+                            ]}
+                            onPress={() => handleSizeSelection('XL')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>XL</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[
+                                AppStyle.productDetailScreenStyle.selectSizeButtomStyle,
+                                selectedSize === 'XXL' ? { backgroundColor: '#FCD1AC' } : null,
+                            ]}
+                            onPress={() => handleSizeSelection('XXL')}
+                        >
+                            <Text style={AppStyle.productDetailScreenStyle.selectSizeButtomText}>XXL</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+                <View
+                    style={{
+                        backgroundColor: "#FFF",
+                        marginTop: 5,
+                    }}
+                >
+                    <View style={AppStyle.productDetailScreenStyle.selectSizeButtomView}>
+                        <View
+                            style={AppStyle.productDetailScreenStyle.buyInfoView}
+                        >
+                            <Text
+                                style={AppStyle.productDetailScreenStyle.buyInfoText}
+                            >
+                                Đã bán: 1000
+                            </Text>
+                        </View>
+                        <View
+                            style={AppStyle.productDetailScreenStyle.interactView}
+                        >
+                            <TouchableOpacity
+                                style={AppStyle.productDetailScreenStyle.interactButtomView}
+                                onPress={handleHeartIconPress}
+                            >
+                                <Image
+                                    source={images.HeartIcon}
+                                    style={[
+                                        AppStyle.productDetailScreenStyle.interactIconStyle,
+                                        isHeartIconPressed && { tintColor: 'red' },
+                                    ]}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={AppStyle.productDetailScreenStyle.interactButtomView}
+                            >
+                                <Image
+                                    source={images.ShareIcon}
+                                    style={AppStyle.productDetailScreenStyle.interactIconStyle}
+                                />
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={AppStyle.productDetailScreenStyle.interactButtomView}
+                            >
+                                <Image
+                                    source={images.MessengerIcon}
+                                    style={AppStyle.productDetailScreenStyle.interactIconStyle}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
             </View>
+
             <View style={
                 AppStyle.productDetailScreenStyle.buttomView
             }>
@@ -77,8 +231,8 @@ const ProductDetailScreen = ({ route, navigation }) => {
                     onPress={() => navigation.goBack()}
                 >
                     <Image
-                    source={images.goBackIcon}
-                    style= {AppStyle.productDetailScreenStyle.iconStyle}
+                        source={images.goBackIcon}
+                        style={AppStyle.productDetailScreenStyle.iconStyle}
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -86,14 +240,14 @@ const ProductDetailScreen = ({ route, navigation }) => {
                     onPress={handleAddToCart}
                 >
                     <Image
-                    source={images.AddCartIcon}
-                    style= {AppStyle.productDetailScreenStyle.iconStyle}
+                        source={images.AddCartIcon}
+                        style={AppStyle.productDetailScreenStyle.iconStyle}
                     />
                 </TouchableOpacity>
-                
+
                 <TouchableOpacity
                     style={AppStyle.productDetailScreenStyle.addToCartButton}
-                    onPress={handleAddToCart}
+                    onPress={handleBuyToCart}
                 >
                     <Text
                         style={AppStyle.productDetailScreenStyle.goBackButtomText}

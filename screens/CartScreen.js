@@ -5,19 +5,20 @@ import { removeFromCart } from '../redux/actions';
 import AppStyle from '../theme';
 import CheckBox from '@react-native-community/checkbox';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import TabView from '../component/TabView';
-
+import images from '../assest/icons';
+import { useNavigation } from '@react-navigation/native';
 const convertToNumber = (priceString) => {
     return parseFloat(priceString.replace(/\./g, ''));
 };
 
-const CartScreen = ({ route }) => {
+const CartScreen = ({ route, navigation }) => {
     const dispatch = useDispatch();
     const [checkedItems, setCheckedItems] = useState({});
     const [quantityItems, setQuantityItems] = useState({});
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const cartItems = useSelector(state => state.cart.cartItems) || [];
+
 
     useEffect(() => {
         console.log('Cart Items:', cartItems);
@@ -129,14 +130,47 @@ const CartScreen = ({ route }) => {
         setItemToDelete(null);
     };
 
+    function TabView() {
+        return (
+            <View style={{
+                backgroundColor: "#FFF",
+                height: 40
+            }}>
+            </View>
+        )
+    }
+
     return (
         <View style={AppStyle.CartScreenStyle.container}>
             <TabView />
-            <Text style={AppStyle.CartScreenStyle.title}>Giỏ Hàng Của Bạn</Text>
+            <View style={AppStyle.CartScreenStyle.payView}>
+                <View style={AppStyle.CartScreenStyle.titleCart}>
+                    <Text style={AppStyle.CartScreenStyle.title}>Giỏ Hàng Của Bạn</Text>
+                </View>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate("PayHome", { checkedItems })}
+                    style={AppStyle.CartScreenStyle.payButtomView}
+                >
+
+                    <Image
+                        style={AppStyle.CartScreenStyle.payIconStyle}
+                        source={images.PayIcon}
+                    />
+                    <Text style={AppStyle.CartScreenStyle.payButtomText}>
+                        Thanh toan
+                    </Text>
+                </TouchableOpacity>
+            </View>
             {cartItems.length === 0 ? (
-                <Text style={AppStyle.CartScreenStyle.emptyCartText}>
-                    Giỏ hàng của bạn đang trống.
-                </Text>
+                <View style={AppStyle.CartScreenStyle.nullCart}>
+                    <Image
+                        source={images.CartNullIcon}
+                        style={AppStyle.CartScreenStyle.nullIconStyle}
+                    />
+                    <Text style={AppStyle.CartScreenStyle.cartNullText}>
+                        Giỏ hàng trống
+                    </Text>
+                </View>
             ) : (
                 <FlatList
                     showsHorizontalScrollIndicator={false}
@@ -179,20 +213,20 @@ const CartScreen = ({ route }) => {
                                         <Text style={AppStyle.CartScreenStyle.checkboxButtomText}>-</Text>
                                     </TouchableOpacity>
                                     <View>
-                                    <Text style={AppStyle.CartScreenStyle.checkboxText}>
-                                        {quantityItems[item.id] || 0}
-                                    </Text>
+                                        <Text style={AppStyle.CartScreenStyle.checkboxText}>
+                                            {quantityItems[item.id] || 0}
+                                        </Text>
                                     </View>
                                     <TouchableOpacity onPress={() => increaseQuantity(item.id)}>
                                         <Text style={AppStyle.CartScreenStyle.checkboxButtomText}>+</Text>
                                     </TouchableOpacity>
                                 </View>
-                                
+
                                 <TouchableOpacity
-                                style={AppStyle.CartScreenStyle.buttomViewDelete}
-                                 onPress={() => handleConfirmDelete(item.id)}>
+                                    style={AppStyle.CartScreenStyle.buttomViewDelete}
+                                    onPress={() => handleConfirmDelete(item.id)}>
                                     <Text
-                                    style={AppStyle.CartScreenStyle.buttomViewDeleteText}
+                                        style={AppStyle.CartScreenStyle.buttomViewDeleteText}
                                     >Xoá</Text>
                                 </TouchableOpacity>
                             </View>
@@ -200,9 +234,6 @@ const CartScreen = ({ route }) => {
                     )}
                 />
             )}
-            <Text style={AppStyle.CartScreenStyle.totalPrice}>
-                Số lượng: ({cartItems.length} sản phẩm)
-            </Text>
             <Text style={AppStyle.CartScreenStyle.totalPrice}>
                 Tổng giá trị: {totalRetailPrice.toLocaleString()} ₫
             </Text>
@@ -215,14 +246,14 @@ const CartScreen = ({ route }) => {
                         style={AppStyle.CartScreenStyle.confirmDeleteModalButtom1}
                         onPress={handleDeleteItem}>
                         <Text
-                        style={AppStyle.CartScreenStyle.confirmDeleteModalButtomText}
+                            style={AppStyle.CartScreenStyle.confirmDeleteModalButtomText}
                         >Đồng ý</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={AppStyle.CartScreenStyle.confirmDeleteModalButtom2}
                         onPress={() => setConfirmDelete(false)}>
                         <Text
-                        style={AppStyle.CartScreenStyle.confirmDeleteModalButtomText}
+                            style={AppStyle.CartScreenStyle.confirmDeleteModalButtomText}
                         >Hủy</Text>
                     </TouchableOpacity>
                 </View>

@@ -7,12 +7,13 @@ const Height = Dimensions.get('window').height;
 const CartScreenStyle = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#FFF",
+        backgroundColor: "#E6E6E6",
     },
     nullCart: {
         flex: 1,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#FFF"
     },
     nullCartText: {
         fontSize: 18,
@@ -22,7 +23,18 @@ const CartScreenStyle = StyleSheet.create({
     imageStyle: {
         height: 80,
         width: 80,
-        borderRadius:10
+        borderRadius: 10
+    },
+    nullIconStyle: {
+        height: 150,
+        width: 150,
+        borderRadius: 10
+    },
+    cartNullText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 10,
+        padding: 10
     },
     title: {
         fontSize: 24,
@@ -31,17 +43,17 @@ const CartScreenStyle = StyleSheet.create({
         padding: 10
     },
     productContainerView: {
-        backgroundColor: "#d4e7ed",
+        backgroundColor: "#FFF",
         marginBottom: 5,
         margin: 5,
-        borderRadius:10,
-        height:150
+        borderRadius: 10,
+        height: 150
     },
     productContainer: {
         flexDirection: 'row',
         borderRadius: 8,
         padding: 5,
-        backgroundColor: "#d4e7ed",
+        backgroundColor: "#FFF",
     },
     productImage: {
         width: 80,
@@ -65,7 +77,7 @@ const CartScreenStyle = StyleSheet.create({
     totalPrice: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: "#FF9900",
+        color: "#e25b45",
         padding: 5
     },
     buttomView: {
@@ -75,12 +87,12 @@ const CartScreenStyle = StyleSheet.create({
     },
     buttomViewCheckBox: {
         flex: 2,
-        justifyContent : "center",
+        justifyContent: "center",
         alignItems: "center"
     },
     buttomViewNumber: {
         flex: 8,
-        justifyContent : "center",
+        justifyContent: "center",
         flexDirection: "row",
         alignItems: "center"
     },
@@ -88,50 +100,52 @@ const CartScreenStyle = StyleSheet.create({
         alignSelf: 'center',
     },
     checkboxText: {
-        fontSize:18,
-        padding:5,
-        borderWidth:0.3,
-        marginTop:5,
-        marginBottom:5,
-        paddingLeft:15,
-        paddingEnd:15
+        fontSize: 18,
+        padding: 5,
+        borderWidth: 0.3,
+        marginTop: 5,
+        marginBottom: 5,
+        paddingLeft: 15,
+        paddingEnd: 15
     },
     checkboxButtomText: {
-        fontSize:18,
-        padding:5,
-        borderWidth:0.3,
-        marginTop:5,
-        marginBottom:5,
-        paddingLeft:15,
-        paddingEnd:15
+        fontSize: 18,
+        padding: 5,
+        borderWidth: 0.3,
+        marginTop: 5,
+        marginBottom: 5,
+        paddingLeft: 15,
+        paddingEnd: 15
     },
-    confirmDeleteModal : {
-        margin:5
+    confirmDeleteModal: {
+        margin: 5,
+        backgroundColor: "#FFF",
+        borderRadius: 10
     },
     confirmDeleteModalTitle: {
-        fontSize:22,
-        paddingLeft:10,
+        fontSize: 22,
+        paddingLeft: 10,
         color: "#fd8258",
 
     },
     confirmDeleteModalButtom1: {
         backgroundColor: "#06969e",
-        borderRadius:109,
+        borderRadius: 109,
         justifyContent: "center",
-        alignItems:"center",
-        margin:5,
-        padding:3
+        alignItems: "center",
+        margin: 5,
+        padding: 3
     },
     confirmDeleteModalButtom2: {
         backgroundColor: "#e9674c",
-        borderRadius:109,
+        borderRadius: 109,
         justifyContent: "center",
-        alignItems:"center",
-        margin:5,
-        padding:3
+        alignItems: "center",
+        margin: 5,
+        padding: 3
     },
     confirmDeleteModalButtomText: {
-        fontSize:20,
+        fontSize: 20,
         padding: 3,
         color: "#FFF",
         fontWeight: "600"
@@ -140,10 +154,32 @@ const CartScreenStyle = StyleSheet.create({
         justifyContent: "flex-end",
         alignItems: "flex-start"
     },
-    buttomViewDeleteText : {
-        fontSize : 18,
+    buttomViewDeleteText: {
+        fontSize: 18,
         color: "#fd8258",
         padding: 15
+    },
+    payView: {
+        flexDirection: "row",
+        height: 50,
+        backgroundColor: "#FFF"
+    },
+    titleCart: {
+        flex: 8,
+        justifyContent : "center"
+    },
+    payButtomView: {
+        flex: 2,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    payIconStyle: {
+        height: 40,
+        width: 40
+    },
+    payButtomText: {
+        fontSize: 10,
+        color : "#545454"
     }
 });
 

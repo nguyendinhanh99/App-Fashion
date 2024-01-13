@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     buyNowButton: {
-        backgroundColor: '#27ae60',
+        backgroundColor: '#fd8258',
         borderRadius: 8,
         flex: 1,
         padding:5

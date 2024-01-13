@@ -14,6 +14,7 @@ import FeatureScreen from '../screens/featureScreen';
 import UserShopScreen from '../screens/UserShopScreen';
 import CartScreen from '../screens/CartScreen';
 import ProductDetailScreen from '../screens/productDetailScreen';
+import PayScreen from '../screens/payScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ function HomeStack() {
       <Stack.Screen name="UserShopCart" component={CartScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Fashion AI" component={AIFashionScreen} options={{ headerShown: false }} />
       <Stack.Screen name="ProductDetail" component={ProductDetailScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="PayHome" component={PayScreen} options={{ headerShown: false }} />
 
     </Stack.Navigator>
   );
